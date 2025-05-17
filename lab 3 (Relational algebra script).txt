@@ -1,0 +1,52 @@
+Question 1:
+
+q1 := project fname, minit, lname, sex, bdate (employee);
+
+Question 2:
+
+q2 := project fname, minit, lname, bdate (select sex = 'F' (employee));
+
+Question 3:
+
+q3 := select (dnum = 5 or plocation = 'Stafford') (projects);
+
+Question 4:
+
+q4 := select sex = 'M' and salary < 35000 (employee);
+
+Question 5:
+
+temp1 (name) := project fname (employee);
+temp2 (name) := project dependent_name (dependent);
+q5 := temp1 union temp2;
+
+Question 6:
+
+q6 := temp1 intersect temp2;
+
+Question 7:
+
+q7temp (dno, dname) := project dnumber, dname (department);
+q7 := project fname, minit, lname, ssn, salary, dname (employee njoin q7temp);
+Question 8:
+
+supervisors_info (superssn, sfname, sminit, slname, sdno) := project ssn, fname, minit, lname, dno (employee);
+emp_names := project fname, minit, lname, superssn (employee);
+dept_info (sdno, dname) := project dnumber, dname (department);
+supervisor_dept := supervisors_info njoin dept_info;
+q8 := project fname, minit, lname, sfname, sminit, slname, dname (emp_names njoin supervisor_dept);
+
+Question 9:
+
+dept_info_q9 (sdno, dname) := project dnumber, dname (department);
+emp_q9 (superssn, sfname, sminit, slname, sdno) := project ssn, fname, minit, lname, dno (employee);
+supervisor_dept_q9 := project superssn, sfname, sminit, slname, dname (emp_q9 njoin dept_info_q9);
+q9 := project fname, minit, lname, sfname, sminit, slname, dname (employee njoin supervisor_dept_q9);
+
+Question 10:
+
+all_depts := project dnumber (department);
+all_locs := project dlocation (dept_locations);
+all_pairs := all_depts njoin all_locs;
+actual_pairs := project dnumber, dlocation (dept_locations);
+q10 := all_pairs difference actual_pairs;
