@@ -150,7 +150,7 @@ CREATE OR REPLACE FUNCTION getBigFactorial(fn bigint) RETURNS bigint as $$
     return fn;
  END;
  $$ language plpgsql;
- select getBigFactorial(21)
+ select getBigFactorial(21);
 -- Source: https://www.postgresql.org/docs/current/datatype-numeric.html
 
 -- QUESTION 7
