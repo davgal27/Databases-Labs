@@ -129,22 +129,25 @@ CREATE OR REPLACE FUNCTION getBigFactorial(fn bigint) RETURNS bigint as $$
  DECLARE
     product bigint;
     minus1  bigint;
+    result  bigint;
  BEGIN
     if (fn < 1) then
     RAISE EXCEPTION 'Error: Argument less than 1!';
         return null;
     end if;
-    if (fn > 20) then
-        RAISE EXCEPTION 'Error: computing factorial; numeric value out of range';
+    if (fn > 21) then
+        RAISE EXCEPTION 'Error: getFactorial - argument too large %!',fn;
     end if;
     minus1 := fn - 1;
+
     if (minus1>0)
     then
-       product := fn * getBigFactorial(minus1);
-       if (product > 9223372036854775807 or product < -9223372036854775808) then
-        RAISE EXCEPTION 'Error: computing factorial; numeric value out of range';
+        result := getBigFactorial(minus1);
+        if (result > 9223372036854775807/fn) then
+        RAISE EXCEPTION 'Error computing factorial; numeric value out of range';
         return null;
-       end if;
+        end if;
+       product := fn * result;
        return product;
     end if;
     return fn;
@@ -218,4 +221,3 @@ $BODY$
 LANGUAGE plpgsql;
 -- testing
 SELECT scott.printdeptemps(10);
-
